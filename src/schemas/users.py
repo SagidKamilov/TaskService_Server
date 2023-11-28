@@ -10,4 +10,5 @@ class UserSchema(BaseModel):
 
 
 class UserSchemaAdd(BaseModel):
+    id: int
     name: str
