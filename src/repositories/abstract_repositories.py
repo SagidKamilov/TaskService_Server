@@ -1,3 +1,4 @@
+from typing import List
 from abc import ABC, abstractmethod
 
 from sqlalchemy import insert, select
@@ -18,14 +19,14 @@ class AbstractRepository(ABC):
 class SQLOrmRepository(AbstractRepository):
     model = None
 
-    async def add_one(self, data: dict):
+    async def add_one(self, data: dict) -> int:
         async with session_maker() as session:
             stmt = insert(self.model).values(**data).returning(self.model.id)
             res = await session.execute(stmt)
             await session.commit
             return res.scalar_one()
 
-    async def find_all(self):
+    async def find_all(self) -> List[int]:
         async with session_maker() as session:
             stmt = select(self.model)
             res = await session.execute(stmt)
