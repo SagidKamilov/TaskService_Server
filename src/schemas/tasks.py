@@ -13,6 +13,13 @@ class TaskSchema(BaseModel):
         from_attributes = True
 
 
+class TaskSchemaGet(BaseModel):
+    id: int
+    title: str
+    author_id: int
+    assignee_id: int
+
+
 class TaskSchemaAdd(BaseModel):
     title: str
     author_id: int
