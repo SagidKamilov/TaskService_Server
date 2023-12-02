@@ -23,7 +23,7 @@ class SQLOrmRepository(AbstractRepository):
         async with session_maker() as session:
             stmt = insert(self.model).values(**data).returning(self.model.id)
             res = await session.execute(stmt)
-            await session.commit
+            await session.commit()
             return res.scalar_one()
 
     async def find_all(self) -> List[int]:
