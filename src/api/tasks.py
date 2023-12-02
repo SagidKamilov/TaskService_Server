@@ -2,10 +2,10 @@ from typing import Annotated, Dict, List
 
 from fastapi import APIRouter, Depends
 
-from src.schemas.tasks import TaskSchemaAdd
+from src.schemas.tasks import TaskSchemaAdd, TaskSchemaGet
 from src.services.tasks import TasksService
 
-from dependencies import tasks_service
+from src.api.dependencies import tasks_service
 
 router = APIRouter(
     prefix="/tasks",
@@ -20,7 +20,7 @@ async def add_task(task: TaskSchemaAdd, task_add_service: Annotated[TasksService
 
 
 @router.get("")
-async def get_tasks(task_service: Annotated[TasksService, Depends(tasks_service)]) -> List[int]:
+async def get_tasks(task_service: Annotated[TasksService, Depends(tasks_service)]) -> List[TaskSchemaGet]:
     tasks = await task_service.get_tasks()
     return tasks
 
