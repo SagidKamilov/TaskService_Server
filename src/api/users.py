@@ -2,10 +2,10 @@ from typing import Annotated, Dict, List
 
 from fastapi import APIRouter, Depends
 
-from src.schemas.users import UserSchemaAdd
+from src.schemas.users import UserSchemaAdd, UserSchemaGet
 from src.services.users import UserService
 
-from dependencies import users_service
+from src.api.dependencies import users_service
 
 router = APIRouter(
     prefix="/users",
@@ -20,6 +20,6 @@ async def add_user(user: UserSchemaAdd, user_add_service: Annotated[UserService,
 
 
 @router.get("")
-async def get_users(user_service: Annotated[UserService, Depends(users_service)]) -> List[int]:
+async def get_users(user_service: Annotated[UserService, Depends(users_service)]) -> List[UserSchemaGet]:
     users = await user_service.get_users()
     return users
