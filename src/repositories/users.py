@@ -2,5 +2,5 @@ from src.models.users import Users
 from src.repositories.abstract_repositories import SQLOrmRepository
 
 
-class UserService(SQLOrmRepository):
+class UserRepository(SQLOrmRepository):
     model = Users
