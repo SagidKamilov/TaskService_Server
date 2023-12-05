@@ -1,6 +1,6 @@
 from typing import List
 
-from src.schemas.users import UserSchemaAdd
+from src.schemas.users import UserSchemaAdd, UserSchemaDelete
 from src.utils.unitofwork import IUnitOfWork
 
 
@@ -17,4 +17,12 @@ class UserService:
     async def get_users(uow: IUnitOfWork):
         async with uow:
             users = await uow.users.find_all()
+            return users
+
+    @staticmethod
+    async def delete_users(uow: IUnitOfWork, user: UserSchemaDelete):
+        users_dict = user.model_dump()
+        async with uow:
+            users = await uow.users.delete_one(users_dict)
+            await uow.commit()
             return users
