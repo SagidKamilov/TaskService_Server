@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from pydantic import BaseModel
 
 
@@ -11,13 +9,6 @@ class TaskSchema(BaseModel):
 
     class Config:
         from_attributes = True
-
-
-class TaskSchemaGet(BaseModel):
-    id: int
-    title: str
-    author_id: int
-    assignee_id: int
 
 
 class TaskSchemaAdd(BaseModel):
