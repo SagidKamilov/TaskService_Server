@@ -1,5 +1,5 @@
 from src.models.users import Users
-from src.repositories.abstract_repositories import SQLOrmRepository
+from src.repositories.sql_repositories import SQLOrmRepository
 
 
 class UsersRepository(SQLOrmRepository):

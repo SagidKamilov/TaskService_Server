@@ -1,8 +1,6 @@
-from typing import Annotated, Dict, List
+from fastapi import APIRouter
 
-from fastapi import APIRouter, Depends
-
-from src.schemas.users import UserSchemaAdd, UserSchemaGet
+from src.schemas.users import UserSchemaAdd
 from src.services.users import UserService
 
 from src.api.dependencies import UOWDep
