@@ -9,11 +9,6 @@ class UserSchema(BaseModel):
         from_attributes = True
 
 
-class UserSchemaGet(BaseModel):
-    id: int
-    name: str
-
-
 class UserSchemaAdd(BaseModel):
     id: int
     name: str
