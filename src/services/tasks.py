@@ -43,6 +43,6 @@ class TasksService:
     async def delete_task(uow: UnitOfWork, task: TaskDeleteSchema):
         task_dict: dict = task.model_dump()
         async with uow:
-            check = await uow.tasks.delete_one(task_dict)
+            check = await uow.tasks.delete_one(**task_dict)
             await uow.commit()
             return check

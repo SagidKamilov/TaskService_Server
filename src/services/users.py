@@ -23,6 +23,6 @@ class UserService:
     async def delete_users(uow: IUnitOfWork, user: UserSchemaDelete):
         users_dict = user.model_dump()
         async with uow:
-            users = await uow.users.delete_one(users_dict)
+            users = await uow.users.delete_one(**users_dict)
             await uow.commit()
             return users
