@@ -1,5 +1,3 @@
-import json
-
 from fastapi import APIRouter
 
 from src.api.dependencies import UOWDep
@@ -14,7 +12,7 @@ router = APIRouter(
 
 
 @router.get("")
-async def get_tasks(uow: UOWDep,):
+async def get_tasks(uow: UOWDep):
     tasks = await TasksService().get_tasks(uow)
     return tasks
 
