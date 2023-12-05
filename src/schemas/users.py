@@ -12,3 +12,7 @@ class UserSchema(BaseModel):
 class UserSchemaAdd(BaseModel):
     id: int
     name: str
+
+
+class UserSchemaDelete(BaseModel):
+    id: int
