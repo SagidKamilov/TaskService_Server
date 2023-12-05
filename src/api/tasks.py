@@ -1,11 +1,11 @@
-from typing import Annotated, Dict, List
+import json
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter
 
-from src.schemas.tasks import TaskSchemaAdd, TaskSchemaGet
+from src.api.dependencies import UOWDep
+from src.schemas.tasks import TaskSchemaAdd, TaskSchemaEdit, TaskDeleteSchema
 from src.services.tasks import TasksService
 
-from src.api.dependencies import tasks_service
 
 router = APIRouter(
     prefix="/tasks",
@@ -13,14 +13,31 @@ router = APIRouter(
 )
 
 
+@router.get("")
+async def get_tasks(uow: UOWDep,):
+    tasks = await TasksService().get_tasks(uow)
+    return tasks
+
+
+@router.get("/history")
+async def get_task_history(uow: UOWDep):
+    tasks = await TasksService().get_task_history(uow)
+    return tasks
+
+
 @router.post("")
-async def add_task(task: TaskSchemaAdd, task_add_service: Annotated[TasksService, Depends(tasks_service)]) -> Dict[str, int]:
-    task_id = await task_add_service.add_task(task)
+async def add_task(task: TaskSchemaAdd, uow: UOWDep):
+    task_id = await TasksService().add_task(uow, task)
     return {"task_id": task_id}
 
 
-@router.get("")
-async def get_tasks(task_service: Annotated[TasksService, Depends(tasks_service)]) -> List[TaskSchemaGet]:
-    tasks = await task_service.get_tasks()
-    return tasks
+@router.patch("/{id}")
+async def edit_task(task_id: int, task: TaskSchemaEdit, uow: UOWDep):
+    await TasksService().edit_task(uow, task_id, task)
+    return {"ok": True}
 
+
+@router.delete("/{id}")
+async def delete_task(task: TaskDeleteSchema, uow: UOWDep):
+    result = await TasksService().delete_task(uow, task)
+    return {"deleted_row": result}
