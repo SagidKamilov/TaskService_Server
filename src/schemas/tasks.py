@@ -24,3 +24,25 @@ class TaskSchemaAdd(BaseModel):
     title: str
     author_id: int
     assignee_id: int
+
+
+class TaskSchemaEdit(BaseModel):
+    author_id: int
+    assignee_id: int
+
+
+class TaskHistorySchema(BaseModel):
+    id: int
+    task_id: int
+    previous_assignee_id: int
+    new_assignee_id: int
+
+
+class TaskHistorySchemaAdd(BaseModel):
+    task_id: int
+    previous_assignee_id: int
+    new_assignee_id: int
+
+
+class TaskDeleteSchema(BaseModel):
+    id: int
