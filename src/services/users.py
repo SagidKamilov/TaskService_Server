@@ -1,7 +1,6 @@
 from typing import List
 
-from src.repositories.abstract_repositories import AbstractRepository
-from src.schemas.users import UserSchemaAdd, UserSchemaGet
+from src.schemas.users import UserSchemaAdd
 from src.utils.unitofwork import IUnitOfWork
 
 
