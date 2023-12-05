@@ -22,7 +22,8 @@ async def get_users(uow: UOWDep):
     users = await UserService().get_users(uow)
     return users
 
+
 @router.delete("")
 async def delete_users(uow: UOWDep, user: UserSchemaDelete):
-    user_id = await UserService().delete_users(uow, user)
-    return {"user_id": user_id}
+    result = await UserService().delete_users(uow, user)
+    return {"deleted_row": result}
