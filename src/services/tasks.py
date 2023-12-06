@@ -1,4 +1,4 @@
-from src.schemas.tasks import TaskSchemaAdd, TaskSchemaEdit, TaskHistorySchemaAdd, TaskDeleteSchema
+from src.schemas.tasks import TaskSchemaAdd, TaskSchemaEdit, TaskHistorySchemaAdd
 from src.utils.unitofwork import IUnitOfWork, UnitOfWork
 
 
@@ -21,9 +21,9 @@ class TasksService:
     async def edit_task(uow: IUnitOfWork, task_id: int, task: TaskSchemaEdit):
         tasks_dict: dict = task.model_dump()
         async with uow:
-            await uow.tasks.edit_one(task_id, tasks_dict)
+            task_edited_id = await uow.tasks.edit_one(task_id, tasks_dict)
 
-            cur_task = await uow.tasks.find_one(id=task_id)
+            cur_task = await uow.tasks.find_one(task_id)
             task_history_log = TaskHistorySchemaAdd(
                 task_id=task_id,
                 previous_assignee_id=cur_task.assignee_id,
@@ -32,6 +32,7 @@ class TasksService:
             task_history_log = task_history_log.model_dump()
             await uow.task_history.add_one(task_history_log)
             await uow.commit()
+            return task_edited_id
 
     @staticmethod
     async def get_task_history(uow: IUnitOfWork):
@@ -40,9 +41,8 @@ class TasksService:
             return history
 
     @staticmethod
-    async def delete_task(uow: UnitOfWork, task: TaskDeleteSchema):
-        task_dict: dict = task.model_dump()
+    async def delete_task(uow: UnitOfWork, task_id):
         async with uow:
-            check = await uow.tasks.delete_one(**task_dict)
+            check = await uow.tasks.delete_one(task_id)
             await uow.commit()
             return check
