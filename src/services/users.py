@@ -1,4 +1,6 @@
-from typing import List
+import typing
+
+from typing import List, Any
 
 from src.schemas.users import UserSchemaAdd, UserSchemaDelete, UserSchemaEdit
 from src.utils.unitofwork import IUnitOfWork
@@ -34,3 +36,11 @@ class UserService:
             user = await uow.users.edit_one(user_id, users_dict)
             await uow.commit()
             return user
+
+    @staticmethod
+    async def get_user(uow: IUnitOfWork, user_id: int):
+        data: dict[str, Any] = {"id": user_id}
+        async with uow:
+            result = await uow.users.find_one(**data)
+            return result
+
