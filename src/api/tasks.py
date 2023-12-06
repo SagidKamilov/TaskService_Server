@@ -1,7 +1,9 @@
+from typing import List, Dict, Union
+
 from fastapi import APIRouter
 
 from src.api.dependencies import UOWDep
-from src.schemas.tasks import TaskSchemaAdd, TaskSchemaEdit, TaskDeleteSchema
+from src.schemas.tasks import TaskSchemaAdd, TaskSchemaEdit
 from src.services.tasks import TasksService
 
 
@@ -29,13 +31,13 @@ async def add_task(task: TaskSchemaAdd, uow: UOWDep):
     return {"task_id": task_id}
 
 
-@router.patch("/{id}")
+@router.patch("/{task_id}")
 async def edit_task(task_id: int, task: TaskSchemaEdit, uow: UOWDep):
-    await TasksService().edit_task(uow, task_id, task)
-    return {"ok": True}
+    task_id = await TasksService().edit_task(uow, task_id, task)
+    return {"task_id": task_id}
 
 
-@router.delete("/{id}")
-async def delete_task(task: TaskDeleteSchema, uow: UOWDep):
-    result = await TasksService().delete_task(uow, task)
+@router.delete("/{task_id}")
+async def delete_task(task_id: int, uow: UOWDep):
+    result = await TasksService().delete_task(uow, task_id)
     return {"deleted_row": result}
