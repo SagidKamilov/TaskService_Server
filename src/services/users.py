@@ -1,6 +1,6 @@
 from typing import List
 
-from src.schemas.users import UserSchemaAdd, UserSchemaDelete
+from src.schemas.users import UserSchemaAdd, UserSchemaDelete, UserSchemaEdit
 from src.utils.unitofwork import IUnitOfWork
 
 
@@ -26,3 +26,11 @@ class UserService:
             users = await uow.users.delete_one(**users_dict)
             await uow.commit()
             return users
+
+    @staticmethod
+    async def edit_user(uow: IUnitOfWork, user_id: int, user: UserSchemaEdit):
+        users_dict: dict = user.model_dump()
+        async with uow:
+            user = await uow.users.edit_one(user_id, users_dict)
+            await uow.commit()
+            return user
