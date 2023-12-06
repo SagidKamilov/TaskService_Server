@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from src.schemas.users import UserSchemaAdd, UserSchemaDelete
+from src.schemas.users import UserSchemaAdd, UserSchemaDelete, UserSchemaEdit
 from src.services.users import UserService
 
 from src.api.dependencies import UOWDep
@@ -27,3 +27,9 @@ async def get_users(uow: UOWDep):
 async def delete_users(uow: UOWDep, user: UserSchemaDelete):
     result = await UserService().delete_users(uow, user)
     return {"deleted_row": result}
+
+
+@router.patch("/{id}")
+async def edit_users(uow: UOWDep, user_id: int, user: UserSchemaEdit):
+    await UserService().edit_user(uow, user_id, user)
+    return {"edit": True}
