@@ -14,10 +14,9 @@ class UserSchemaAdd(BaseModel):
     name: str
 
 
-class UserSchemaDelete(BaseModel):
+class UserSchemaGet(BaseModel):
     id: int
 
 
 class UserSchemaEdit(BaseModel):
-    id: int
     name: str
