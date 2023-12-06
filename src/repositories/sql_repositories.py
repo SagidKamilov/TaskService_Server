@@ -18,8 +18,8 @@ class SQLOrmRepository:
         res = await self.session.execute(stmt)
         return res.scalar_one()
 
-    async def find_one(self, **filter_by):
-        stmt = select(self.model).filter_by(**filter_by)
+    async def find_one(self, invoked_id: int):
+        stmt = select(self.model).filter_by(id=invoked_id)
         res = await self.session.execute(stmt)
         res = res.scalar_one().to_read_model()
         return res
@@ -30,7 +30,7 @@ class SQLOrmRepository:
         res = [row[0].to_read_model() for row in res.all()]
         return res
 
-    async def delete_one(self, **filter_by):
-        stmt = delete(self.model).filter_by(**filter_by)
+    async def delete_one(self, invoked_id):
+        stmt = delete(self.model).filter_by(id=invoked_id)
         res = await self.session.execute(stmt)
         return res.rowcount
