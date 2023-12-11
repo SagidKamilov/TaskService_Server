@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from src.schemas.users import UserSchemaAdd, UserSchemaDelete, UserSchemaEdit, UserSchemaGet
+from src.schemas.users import UserSchemaAdd, UserSchemaEdit
 from src.services.users import UserService
 
 from src.api.dependencies import UOWDep

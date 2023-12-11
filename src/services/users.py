@@ -2,7 +2,7 @@ import typing
 
 from typing import List, Any
 
-from src.schemas.users import UserSchemaAdd, UserSchemaDelete, UserSchemaEdit, UserSchemaGet
+from src.schemas.users import UserSchemaAdd, UserSchemaEdit
 from src.utils.unitofwork import IUnitOfWork
 
 
