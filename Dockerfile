@@ -10,6 +10,6 @@ RUN pip install -r requirements.txt
 
 RUN alembic init alembic
 RUN alembic revision -m "initial migration"
-RUN alembic upgrade head
+#RUN alembic upgrade head
 
 COPY . .
