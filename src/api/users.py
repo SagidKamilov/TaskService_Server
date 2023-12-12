@@ -20,10 +20,10 @@ async def add_user(user: UserSchemaAdd, uow: UOWDep):
 @router.get("")
 async def get_users(uow: UOWDep):
     users = await UserService().get_users(uow)
-    return {"id": users}
+    return users
 
 
-@router.delete("{user_id}")
+@router.delete("/{user_id}")
 async def delete_user(uow: UOWDep, user_id: int):
     result = await UserService().delete_user(uow, user_id)
     return {"deleted_row": result}
